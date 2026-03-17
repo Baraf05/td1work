@@ -1,0 +1,19 @@
+# Logs de déploiement
+deploy.log
+*.log
+
+# Node et dépendances
+node_modules/
+package-lock.json
+yarn.lock
+
+# Dossiers temporaires
+.tmp/
+temp/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Dossiers avec autres dépôts (submodules non-gérés)
+alwaysdata_repo/

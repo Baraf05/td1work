@@ -1,17 +1,18 @@
-ssh tibuleac_den@ssh-tibuleac.alwaysdata.net << 'EOF'
-cd Workflow 
+ssh brf@ssh-brf.alwaysdata.net << 'EOF'
+cd td1work ||
 
-# Mise Ã jour du code
+# Mise à jour du code
 git pull origin main >> deploy.log 2>&1
 echo >> deploy.log
-{git add .
-#git commit -m "Auto pull "
-#git push
+git add .
+
+# git commit -m "Auto pull "
+# git push
 
 if [ $? -eq 0 ]; then
-  echo "Deploy success" | mail -s "Deploy OK" tibuleacdenis4@gmail.com
+  echo "Deploy success" | mail -s "Deploy OK" barannfall@gmail.com
 else
-  echo "Deploy failed" | mail -s "Deploy ERROR" tibuleacdenis4@gmail.com
+  echo "Deploy failed" | mail -s "Deploy ERROR" barannfall@gmail.com
 fi
 EOF
 

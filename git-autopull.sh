@@ -2,12 +2,10 @@ ssh brf@ssh-brf.alwaysdata.net << 'EOF'
 cd td1work
 
 # Mise à jour du code
-git pull origin main >> deploy.log 2>&1
-echo >> deploy.log
-git add .
-
-# git commit -m "Auto pull "
-# git push
+git pull origin main 
+#git add .
+#git commit -m "Auto pull "
+#git push
 
 if [ $? -eq 0 ]; then
   echo "Deploy success" | mail -s "Deploy OK" barannfall@gmail.com

@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil - LocalHeb</title>
+    <title>Accueil - LocalHeb kaka a jours 2</title>
     <style>
         * {
             margin: 0;

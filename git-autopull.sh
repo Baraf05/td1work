@@ -1,5 +1,5 @@
 ssh brf@ssh-brf.alwaysdata.net << 'EOF'
-cd td1work ||
+cd td1work
 
 # Mise à jour du code
 git pull origin main >> deploy.log 2>&1

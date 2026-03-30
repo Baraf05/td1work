@@ -60,7 +60,7 @@ session_start();
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenue sur LocalHeb kaka a jours555🚀</h1>
+        <h1>Bienvenue sur LocalHeb kaka a jours444🚀</h1>
         <p>Ceci est la page d'accueil de votre application web locale hébergée avec Docker et synchronisée avec GitHub & Alwaysdata.</p>
         <p>Version mise à jour le <?php echo date('d/m/Y'); ?></p>
         <p>Explorez les pages disponibles :</p>

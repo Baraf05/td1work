@@ -3,7 +3,7 @@ cd td1work
 
 # Mise à jour du code
 git pull origin main 
-#git add .
+git add .
 #git commit -m "Auto pull "
 #git push
 

@@ -233,7 +233,11 @@ function VehicleCard({
 
   const handleMouseLeave = () => {
     const el = tiltRef.current
-    if (el) el.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg)'
+    if (el) {
+      el.style.transform = 'perspective(800px) rotateY(0deg) rotateX(0deg)'
+      el.style.borderColor = v.flagship ? 'rgba(201,169,110,0.35)' : 'rgba(255,255,255,0.07)'
+      el.style.boxShadow = 'none'
+    }
   }
 
   return (
@@ -254,25 +258,30 @@ function VehicleCard({
         onKeyDown={e => e.key === 'Enter' && onSelect(v)}
         aria-label={`${v.name} — ${v.role}. View details`}
         style={{
-          background: '#111113',
-          border: v.flagship ? '0.5px solid rgba(201,169,110,0.25)' : '0.5px solid rgba(201,169,110,0.06)',
+          background: 'rgba(255,255,255,0.03)',
+          backdropFilter: 'blur(10px)',
+          WebkitBackdropFilter: 'blur(10px)',
+          border: v.flagship ? '1px solid rgba(201,169,110,0.35)' : '1px solid rgba(255,255,255,0.07)',
+          borderRadius: '16px',
+          overflow: 'hidden',
           cursor: 'none',
           transition: 'border-color 0.3s, box-shadow 0.3s',
           willChange: 'transform',
         }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(201,169,110,0.35)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.4)' }}
         className="group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#C9A96E]"
       >
         {/* Image area 16:10 */}
         <div
           className="relative flex items-center justify-center overflow-hidden"
-          style={{ aspectRatio: '16/10', background: '#0A0A0B' }}
+          style={{ aspectRatio: '16/10', background: '#0A0A0A' }}
           aria-label={`${v.name} photo placeholder`}
         >
-          <Car size={40} style={{ color: 'rgba(201,169,110,0.1)' }} aria-hidden="true" />
+          <Car size={36} style={{ color: 'rgba(255,255,255,0.06)' }} aria-hidden="true" />
           {v.flagship && (
             <div
-              className="absolute top-3 left-3 font-sans"
-              style={{ fontSize: '9px', letterSpacing: '0.18em', color: '#C9A96E', border: '0.5px solid rgba(201,169,110,0.3)', padding: '3px 8px', textTransform: 'uppercase' }}
+              className="absolute top-3 left-3 font-sans uppercase"
+              style={{ fontSize: '9px', letterSpacing: '0.16em', color: '#C9A96E', background: 'rgba(201,169,110,0.12)', border: '1px solid rgba(201,169,110,0.3)', padding: '3px 10px', borderRadius: '999px' }}
             >
               Flagship
             </div>
@@ -280,7 +289,7 @@ function VehicleCard({
           {!v.available && (
             <div
               className="absolute inset-0 flex items-center justify-center font-sans"
-              style={{ background: 'rgba(10,10,11,0.7)', fontSize: '11px', letterSpacing: '0.2em', color: '#5A5855', textTransform: 'uppercase' }}
+              style={{ background: 'rgba(0,0,0,0.7)', fontSize: '11px', letterSpacing: '0.2em', color: '#5A5855', textTransform: 'uppercase' }}
             >
               Unavailable
             </div>
@@ -289,36 +298,36 @@ function VehicleCard({
 
         {/* Body */}
         <div className="p-5">
-          <p className="font-sans mb-1" style={{ fontSize: '10px', letterSpacing: '0.12em', color: '#C9A96E', textTransform: 'uppercase' }}>
+          <p className="font-sans mb-1 uppercase" style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.12em', color: '#C9A96E' }}>
             {v.role}
           </p>
-          <h3 className="font-serif font-normal mb-3" style={{ fontSize: '19px', color: '#F5F2EE' }}>
+          <h3 className="font-display mb-3" style={{ fontSize: '18px', fontWeight: 700, color: '#FFFFFF' }}>
             {v.name}
           </h3>
           <div className="flex items-center gap-4 mb-4">
-            <span className="flex items-center gap-1 font-sans" style={{ fontSize: '12px', color: '#5A5855' }}>
+            <span className="flex items-center gap-1 font-sans" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>
               <Users size={12} aria-hidden="true" /> {v.pax}
             </span>
-            <span className="flex items-center gap-1 font-sans" style={{ fontSize: '12px', color: '#5A5855' }}>
+            <span className="flex items-center gap-1 font-sans" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>
               <Briefcase size={12} aria-hidden="true" /> {v.bags}
             </span>
             {v.wifi && (
-              <span className="flex items-center gap-1 font-sans" style={{ fontSize: '12px', color: '#5A5855' }}>
+              <span className="flex items-center gap-1 font-sans" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.4)' }}>
                 <Wifi size={12} aria-hidden="true" /> WiFi
               </span>
             )}
           </div>
           <div className="flex items-center justify-between">
-            <p className="font-sans" style={{ fontSize: '12px', color: '#5A5855' }}>
+            <p className="font-sans" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.35)' }}>
               From{' '}
-              <span className="font-serif" style={{ fontSize: '15px', color: '#C9A96E' }}>
+              <span className="font-sans" style={{ fontSize: '15px', fontWeight: 600, color: '#FFFFFF' }}>
                 {formatPrice(v.pricing.halfDay, currency)}
               </span>
               {' '}/ half day
             </p>
             <button
-              className="flex items-center gap-1 font-sans cursor-none transition-colors duration-200 hover:text-[#F5F2EE]"
-              style={{ fontSize: '12px', color: '#C9A96E', background: 'none', border: 'none', padding: 0 }}
+              className="flex items-center gap-1 font-sans uppercase cursor-none transition-colors duration-200 hover:text-[#D4B87A]"
+              style={{ fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', color: '#C9A96E', background: 'none', border: 'none', padding: 0 }}
               aria-label={`View details for ${v.name}`}
             >
               View <ChevronRight size={12} />
@@ -341,7 +350,7 @@ export default function FleetSection() {
     : vehicles.filter(v => v.category === activeCategory)
 
   return (
-    <section id="fleet" className="py-24 px-6 md:px-14" style={{ background: '#0A0A0B' }}>
+    <section id="fleet" className="py-24 px-6 md:px-14" style={{ background: '#000000' }}>
       <div className="max-w-6xl mx-auto">
 
         {/* Header */}
@@ -362,8 +371,8 @@ export default function FleetSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="font-serif font-normal leading-tight"
-              style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', color: '#F5F2EE' }}
+              className="font-display leading-tight"
+              style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', fontWeight: 800, letterSpacing: '-0.02em', color: '#FFFFFF' }}
             >
               Twenty vehicles.{' '}
               <em className="not-italic" style={{ color: '#C9A96E' }}>One standard.</em>
@@ -407,8 +416,8 @@ export default function FleetSection() {
           role="tablist"
           aria-label="Vehicle categories"
           style={{
-            borderBottom: '0.5px solid rgba(201,169,110,0.08)',
-            position: 'sticky', top: '64px', zIndex: 40, background: '#0A0A0B',
+            borderBottom: '1px solid rgba(255,255,255,0.07)',
+            position: 'sticky', top: '64px', zIndex: 40, background: '#000000',
           }}
         >
           {CATEGORIES.map(cat => (
@@ -417,11 +426,11 @@ export default function FleetSection() {
               role="tab"
               aria-selected={activeCategory === cat}
               onClick={() => setActiveCategory(cat)}
-              className="relative shrink-0 cursor-none font-sans transition-colors duration-200 focus-visible:outline-[#C9A96E]"
+              className="relative shrink-0 cursor-none font-display transition-colors duration-200 focus-visible:outline-[#C9A96E]"
               style={{
-                fontSize: '11px', letterSpacing: '0.12em', textTransform: 'uppercase',
+                fontSize: '11px', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase',
                 padding: '12px 20px', border: 'none', background: 'none',
-                color: activeCategory === cat ? '#F5F2EE' : '#5A5855',
+                color: activeCategory === cat ? '#FFFFFF' : 'rgba(255,255,255,0.35)',
               }}
             >
               {cat}

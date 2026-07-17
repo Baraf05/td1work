@@ -24,9 +24,9 @@ function buildWAMessage(f: FormData): string {
 }
 
 const inputStyle: React.CSSProperties = {
-  width: '100%', background: 'transparent',
-  border: 'none', borderBottom: '0.5px solid rgba(201,169,110,0.12)',
-  padding: '14px 0', fontSize: '14px', color: '#F5F2EE',
+  width: '100%', background: 'rgba(255,255,255,0.04)',
+  border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px',
+  padding: '14px 16px', fontSize: '14px', color: '#FFFFFF',
   fontFamily: 'inherit', outline: 'none',
   transition: 'border-color 0.2s',
 }
@@ -47,7 +47,7 @@ function StyledInput({ id, label, value, onChange, type='text', placeholder, req
         required={required} aria-invalid={!!error} aria-describedby={error ? `${id}-err` : undefined}
         onChange={e => onChange(e.target.value)}
         onFocus={() => setFocused(true)} onBlur={() => setFocused(false)}
-        style={{ ...inputStyle, borderBottomColor: error ? '#C9A96E' : focused ? 'rgba(201,169,110,0.4)' : 'rgba(201,169,110,0.12)' }}
+        style={{ ...inputStyle, borderColor: error ? '#C9A96E' : focused ? '#C9A96E' : 'rgba(255,255,255,0.1)' }}
       />
       {error && <p id={`${id}-err`} role="alert" className="flex items-center gap-1.5 mt-1.5 font-sans" style={{ fontSize:'12px', color:'#C9A96E' }}><AlertCircle size={11} aria-hidden="true"/>{error}</p>}
     </div>
@@ -66,17 +66,17 @@ function Progress({ step }: { step: Step }) {
             <div className="flex items-center gap-2">
               <div
                 style={{
-                  width: '24px', height: '24px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: done ? '#C9A96E' : active ? 'rgba(201,169,110,0.15)' : 'transparent',
-                  border: `0.5px solid ${done || active ? '#C9A96E' : 'rgba(255,255,255,0.08)'}`,
-                  fontSize: '11px', color: done ? '#0A0A0B' : active ? '#C9A96E' : '#5A5855',
+                  width: '24px', height: '24px', borderRadius: '999px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  background: done || active ? '#C9A96E' : 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  fontSize: '11px', fontWeight: 600, color: done || active ? '#000000' : 'rgba(255,255,255,0.4)',
                   fontFamily: 'inherit', flexShrink: 0,
                 }}
                 aria-current={active ? 'step' : undefined}
               >
                 {done ? <Check size={11} /> : n}
               </div>
-              <span style={{ fontSize:'11px', letterSpacing:'0.1em', textTransform:'uppercase', color: active ? '#F5F2EE' : done ? '#C9A96E' : '#5A5855' }}>
+              <span className="font-display" style={{ fontSize:'11px', fontWeight: 600, letterSpacing:'0.1em', textTransform:'uppercase', color: active ? '#FFFFFF' : done ? '#C9A96E' : 'rgba(255,255,255,0.4)' }}>
                 {label}
               </span>
             </div>
@@ -164,8 +164,8 @@ export default function ReservationForm() {
 
   // Summary
   const Summary = () => (
-    <div style={{ border: '0.5px solid rgba(201,169,110,0.12)', padding: '20px' }}>
-      <p className="font-sans mb-4" style={{ fontSize: '10px', letterSpacing: '0.14em', color: '#3A3836', textTransform: 'uppercase' }}>Request summary</p>
+    <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '16px', padding: '20px' }}>
+      <p className="font-sans mb-4" style={{ fontSize: '10px', letterSpacing: '0.14em', color: 'rgba(255,255,255,0.3)', textTransform: 'uppercase' }}>Request summary</p>
       {form.date && <p className="font-sans mb-1" style={{ fontSize: '13px', color: '#A8A49E' }}>{form.date}{form.time ? ` at ${form.time}` : ''}</p>}
       {form.pickup && <p className="font-sans mb-1" style={{ fontSize: '13px', color: '#A8A49E' }}>From: {form.pickup}</p>}
       {form.dropoff && <p className="font-sans mb-1" style={{ fontSize: '13px', color: '#A8A49E' }}>To: {form.dropoff}</p>}
@@ -176,7 +176,7 @@ export default function ReservationForm() {
 
   return (
     <>
-      <section id="reservation" className="py-24 px-6 md:px-14" style={{ background: '#0A0A0B' }}>
+      <section id="reservation" className="py-24 px-6 md:px-14" style={{ background: '#000000' }}>
         <div className="max-w-5xl mx-auto">
 
           {/* Header */}
@@ -185,7 +185,7 @@ export default function ReservationForm() {
               <span className="w-6 h-px bg-[#C9A96E] opacity-50 shrink-0" aria-hidden="true" />
               Reservation
             </motion.p>
-            <motion.h2 initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.7, delay:0.08, ease:[0.16,1,0.3,1] }} className="font-serif font-normal leading-tight" style={{ fontSize:'clamp(2rem, 5vw, 3.5rem)', color:'#F5F2EE' }}>
+            <motion.h2 initial={{ opacity:0, y:20 }} whileInView={{ opacity:1, y:0 }} viewport={{ once:true }} transition={{ duration:0.7, delay:0.08, ease:[0.16,1,0.3,1] }} className="font-display leading-tight" style={{ fontSize:'clamp(2.2rem, 5vw, 4rem)', fontWeight:800, letterSpacing:'-0.02em', color:'#FFFFFF' }}>
               Reserve your{' '}<em className="not-italic" style={{ color:'#C9A96E' }}>transfer.</em>
             </motion.h2>
           </div>
@@ -215,7 +215,7 @@ export default function ReservationForm() {
                         Pickup Location <span style={{ color:'#C9A96E' }} aria-hidden="true">*</span>
                       </label>
                       <input ref={pickupRef} id="pickup" type="text" value={form.pickup} onChange={e => set('pickup')(e.target.value)} placeholder="e.g. Burj Al Arab" aria-invalid={!!errors.pickup}
-                        style={{ ...inputStyle, borderBottomColor: errors.pickup ? '#C9A96E' : 'rgba(201,169,110,0.12)' }} className="mb-1" />
+                        style={{ ...inputStyle, borderColor: errors.pickup ? '#C9A96E' : 'rgba(255,255,255,0.1)' }} className="mb-1" />
                       {errors.pickup && <p role="alert" className="flex items-center gap-1.5 mb-5 font-sans" style={{ fontSize:'12px', color:'#C9A96E' }}><AlertCircle size={11} aria-hidden="true"/>{errors.pickup}</p>}
                       <div className="mb-6" />
                     </div>
@@ -224,26 +224,26 @@ export default function ReservationForm() {
                         Drop-off Location <span style={{ color:'#C9A96E' }} aria-hidden="true">*</span>
                       </label>
                       <input ref={dropoffRef} id="dropoff" type="text" value={form.dropoff} onChange={e => set('dropoff')(e.target.value)} placeholder="e.g. DXB Terminal 3" aria-invalid={!!errors.dropoff}
-                        style={{ ...inputStyle, borderBottomColor: errors.dropoff ? '#C9A96E' : 'rgba(201,169,110,0.12)' }} className="mb-1" />
+                        style={{ ...inputStyle, borderColor: errors.dropoff ? '#C9A96E' : 'rgba(255,255,255,0.1)' }} className="mb-1" />
                       {errors.dropoff && <p role="alert" className="flex items-center gap-1.5 mb-5 font-sans" style={{ fontSize:'12px', color:'#C9A96E' }}><AlertCircle size={11} aria-hidden="true"/>{errors.dropoff}</p>}
                       <div className="mb-6" />
                     </div>
                     <div className="grid grid-cols-2 gap-8 mb-6">
                       <div>
                         <label htmlFor="date" style={{ display:'block', fontSize:'10px', letterSpacing:'0.14em', color:'#5A5855', textTransform:'uppercase', marginBottom:'8px' }}>Date <span style={{ color:'#C9A96E' }} aria-hidden="true">*</span></label>
-                        <input id="date" type="date" lang="en" value={form.date} onChange={e => set('date')(e.target.value)} aria-invalid={!!errors.date} style={{ ...inputStyle, colorScheme:'dark', borderBottomColor: errors.date ? '#C9A96E' : 'rgba(201,169,110,0.12)' }} />
+                        <input id="date" type="date" lang="en" value={form.date} onChange={e => set('date')(e.target.value)} aria-invalid={!!errors.date} style={{ ...inputStyle, colorScheme:'dark', borderColor: errors.date ? '#C9A96E' : 'rgba(255,255,255,0.1)' }} />
                         {errors.date && <p role="alert" className="mt-1 font-sans" style={{ fontSize:'12px', color:'#C9A96E' }}>{errors.date}</p>}
                       </div>
                       <div>
                         <label htmlFor="time" style={{ display:'block', fontSize:'10px', letterSpacing:'0.14em', color:'#5A5855', textTransform:'uppercase', marginBottom:'8px' }}>Time <span style={{ color:'#C9A96E' }} aria-hidden="true">*</span></label>
-                        <input id="time" type="time" value={form.time} onChange={e => set('time')(e.target.value)} aria-invalid={!!errors.time} style={{ ...inputStyle, colorScheme:'dark', borderBottomColor: errors.time ? '#C9A96E' : 'rgba(201,169,110,0.12)' }} />
+                        <input id="time" type="time" value={form.time} onChange={e => set('time')(e.target.value)} aria-invalid={!!errors.time} style={{ ...inputStyle, colorScheme:'dark', borderColor: errors.time ? '#C9A96E' : 'rgba(255,255,255,0.1)' }} />
                         {errors.time && <p role="alert" className="mt-1 font-sans" style={{ fontSize:'12px', color:'#C9A96E' }}>{errors.time}</p>}
                       </div>
                     </div>
                     <div className="mb-6">
                       <label htmlFor="passengers" style={{ display:'block', fontSize:'10px', letterSpacing:'0.14em', color:'#5A5855', textTransform:'uppercase', marginBottom:'8px' }}>Passengers <span style={{ color:'#C9A96E' }} aria-hidden="true">*</span></label>
                       <select id="passengers" value={form.passengers} onChange={e => set('passengers')(e.target.value)} aria-invalid={!!errors.passengers}
-                        style={{ ...inputStyle, appearance:'none', colorScheme:'dark', background:'transparent', cursor:'pointer', borderBottomColor: errors.passengers ? '#C9A96E' : 'rgba(201,169,110,0.12)' }}>
+                        style={{ ...inputStyle, appearance:'none', colorScheme:'dark', cursor:'pointer', borderColor: errors.passengers ? '#C9A96E' : 'rgba(255,255,255,0.1)' }}>
                         <option value="">Select</option>
                         {[1,2,3,4,5,6].map(n => <option key={n} value={String(n)}>{n}</option>)}
                         <option value="7+">7+</option>
@@ -261,7 +261,7 @@ export default function ReservationForm() {
                         </motion.div>
                       )}
                     </AnimatePresence>
-                    <button onClick={nextStep} className="flex items-center gap-2 cursor-none font-sans font-medium transition-opacity hover:opacity-90" style={{ background:'#C9A96E', color:'#0A0A0B', padding:'14px 32px', fontSize:'13px', letterSpacing:'0.08em', border:'none' }}>
+                    <button onClick={nextStep} className="btn-gold">
                       Next: Vehicle <ChevronRight size={14} />
                     </button>
                   </motion.div>
@@ -275,25 +275,26 @@ export default function ReservationForm() {
                           onClick={() => set('vehicle')(v.name)}
                           className="flex items-center gap-3 text-left cursor-none transition-all duration-200 p-4"
                           style={{
-                            border: form.vehicle === v.name ? '0.5px solid #C9A96E' : '0.5px solid rgba(201,169,110,0.1)',
-                            background: form.vehicle === v.name ? 'rgba(201,169,110,0.06)' : '#111113',
+                            border: form.vehicle === v.name ? '1px solid #C9A96E' : '1px solid rgba(255,255,255,0.08)',
+                            borderRadius: '12px',
+                            background: form.vehicle === v.name ? 'rgba(201,169,110,0.08)' : 'rgba(255,255,255,0.04)',
                           }}
                           aria-pressed={form.vehicle === v.name}
                         >
-                          <div className="flex items-center justify-center shrink-0" style={{ width:'36px', height:'36px', border: '0.5px solid rgba(201,169,110,0.1)', background:'#0A0A0B' }}>
-                            <Car size={16} style={{ color: form.vehicle === v.name ? '#C9A96E' : '#3A3836' }} aria-hidden="true" />
+                          <div className="flex items-center justify-center shrink-0" style={{ width:'36px', height:'36px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)', background:'#0A0A0A' }}>
+                            <Car size={16} style={{ color: form.vehicle === v.name ? '#C9A96E' : 'rgba(255,255,255,0.3)' }} aria-hidden="true" />
                           </div>
                           <div>
-                            <p className="font-sans" style={{ fontSize:'13px', color: form.vehicle === v.name ? '#F5F2EE' : '#A8A49E' }}>{v.name}</p>
-                            {'role' in v && <p className="font-sans" style={{ fontSize:'11px', color:'#5A5855' }}>{v.role}</p>}
+                            <p className="font-sans" style={{ fontSize:'13px', color: form.vehicle === v.name ? '#FFFFFF' : 'rgba(255,255,255,0.7)' }}>{v.name}</p>
+                            {'role' in v && <p className="font-sans" style={{ fontSize:'11px', color:'rgba(255,255,255,0.4)' }}>{v.role}</p>}
                           </div>
                           {form.vehicle === v.name && <Check size={12} style={{ color:'#C9A96E', marginLeft:'auto', flexShrink:0 }} />}
                         </button>
                       ))}
                     </div>
                     <div className="flex items-center gap-4">
-                      <button onClick={() => setStep(1)} className="cursor-none font-sans transition-colors hover:text-[#F5F2EE]" style={{ fontSize:'13px', color:'#5A5855', background:'none', border:'none', padding:0 }}>← Back</button>
-                      <button onClick={nextStep} className="flex items-center gap-2 cursor-none font-sans font-medium transition-opacity hover:opacity-90" style={{ background:'#C9A96E', color:'#0A0A0B', padding:'14px 32px', fontSize:'13px', letterSpacing:'0.08em', border:'none' }}>
+                      <button onClick={() => setStep(1)} className="btn-outline-hero">← Back</button>
+                      <button onClick={nextStep} className="btn-gold">
                         Next: Contact <ChevronRight size={14} />
                       </button>
                     </div>
@@ -305,8 +306,8 @@ export default function ReservationForm() {
                     <StyledInput id="email" label="Email (optional)" value={form.email} onChange={set('email')} type="email" placeholder="you@example.com" autoComplete="email" />
                     {!isAirport && <StyledInput id="extras" label="Special Request (optional)" value={form.extras} onChange={set('extras')} placeholder="Child seat, name board, specific route…" />}
                     <div className="flex items-center gap-4 mt-8">
-                      <button type="button" onClick={() => setStep(2)} className="cursor-none font-sans transition-colors hover:text-[#F5F2EE]" style={{ fontSize:'13px', color:'#5A5855', background:'none', border:'none', padding:0 }}>← Back</button>
-                      <button type="submit" className="cursor-none font-sans font-medium transition-opacity hover:opacity-90" style={{ background:'#C9A96E', color:'#0A0A0B', padding:'14px 32px', fontSize:'13px', letterSpacing:'0.08em', border:'none' }}>
+                      <button type="button" onClick={() => setStep(2)} className="btn-outline-hero">← Back</button>
+                      <button type="submit" className="btn-gold">
                         Send request via WhatsApp
                       </button>
                     </div>

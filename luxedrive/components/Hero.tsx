@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
-import { Pause, Play } from 'lucide-react'
+import { Pause, Play, ArrowDown } from 'lucide-react'
 
 const WORD_VARIANTS = {
   hidden: { y: '105%', rotate: 2 },
@@ -60,7 +60,7 @@ export default function Hero() {
   }
 
   return (
-    <section ref={ref} className="relative min-h-screen overflow-hidden bg-[#0A0A0B] flex flex-col">
+    <section ref={ref} className="relative min-h-screen overflow-hidden bg-black flex flex-col">
 
       {/* ── Video / poster background ──────────────────── */}
       <motion.div style={{ y: imgY }} className="absolute inset-0 z-0">
@@ -78,19 +78,19 @@ export default function Hero() {
           <source src="/hero.webm" type="video/webm" />
           <source src="/hero.mp4"  type="video/mp4"  />
         </video>
-        {/* Brightness treatment on poster fallback */}
-        <div className="absolute inset-0" style={{ background: 'rgba(10,10,11,0.35)' }} />
+        {/* Flat overlay */}
+        <div className="absolute inset-0" style={{ background: 'rgba(0,0,0,0.55)' }} />
       </motion.div>
 
       {/* ── Persistent directional overlay (WCAG 1.4.3) ── */}
       <div
         className="absolute inset-0 z-10 pointer-events-none"
         style={{
-          background: 'linear-gradient(to right, rgba(10,10,11,0.75) 0%, rgba(10,10,11,0.4) 55%, rgba(10,10,11,0.15) 100%)',
+          background: 'linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 60%)',
         }}
       />
       {/* Bottom fade into next section */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-[#0A0A0B] pointer-events-none" />
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-black pointer-events-none" />
 
       {/* ── Video pause / play ─────────────────────────── */}
       <motion.button
@@ -122,13 +122,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex items-center gap-3 mb-8"
+          className="mb-8"
         >
-          <span className="w-7 h-px bg-[#C9A96E] opacity-60" aria-hidden="true" />
-          <span
-            className="font-sans text-[10px] tracking-[0.2em] uppercase"
-            style={{ color: '#C9A96E' }}
-          >
+          <span className="eyebrow">
+            <span className="w-7 h-px bg-[#C9A96E] opacity-60" aria-hidden="true" />
             Private Chauffeur · Dubai
           </span>
         </motion.div>
@@ -138,13 +135,13 @@ export default function Hero() {
           variants={CONTAINER}
           initial="hidden"
           animate="show"
-          className="font-serif font-normal text-[#F5F2EE] leading-[0.92] tracking-tight mb-10"
-          style={{ fontSize: 'clamp(3.2rem, 9vw, 8rem)' }}
+          className="font-display text-white mb-10"
+          style={{ fontSize: 'clamp(3.5rem, 8vw, 7.5rem)', fontWeight: 800, lineHeight: 0.9, letterSpacing: '-0.03em' }}
         >
           <div><Word text="The" />{' '}<Word text="ground" />{' '}<Word text="standard." /></div>
           <div>
             <Word text="For" />{' '}
-            <Word text="Dubai's" style={{ color: '#C9A96E', fontStyle: 'italic' }} />{' '}
+            <Word text="Dubai's" style={{ color: '#C9A96E' }} />{' '}
             <Word text="most" />
           </div>
           <div><Word text="demanding" />{' '}<Word text="guests." /></div>
@@ -157,7 +154,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 1.4, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col sm:flex-row items-start sm:items-center gap-6 max-w-3xl"
         >
-          <p className="text-sm font-sans text-[#A8A49E] leading-relaxed max-w-xs">
+          <p className="font-sans" style={{ fontSize: '15px', fontWeight: 400, color: 'rgba(255,255,255,0.55)', maxWidth: '340px', lineHeight: 1.6 }}>
             Trusted by touring artists, executives, and the guests who prefer not to be recognised.
           </p>
 
@@ -167,7 +164,7 @@ export default function Hero() {
               onClick={scrollToReservation}
               className="btn-gold"
             >
-              Reserve
+              Reserve a transfer
             </a>
             <a
               href="https://wa.me/971542370940?text=Hello%20Elite%20Class%2C%20I%27d%20like%20to%20inquire%20about%20a%20booking."
@@ -183,6 +180,38 @@ export default function Hero() {
               WhatsApp
             </a>
           </div>
+        </motion.div>
+
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 2 }}
+          className="flex flex-wrap items-center gap-x-3 gap-y-2 mt-10"
+          aria-hidden="true"
+        >
+          {['500+ transfers', '24/7', '20 vehicles', 'Dubai & UAE'].map((stat, i) => (
+            <span key={stat} className="flex items-center gap-3">
+              {i > 0 && <span style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#C9A96E', flexShrink: 0 }} />}
+              <span className="font-sans uppercase" style={{ fontSize: '11px', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.25)' }}>
+                {stat}
+              </span>
+            </span>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        style={{ opacity: fadeOut }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none"
+        aria-hidden="true"
+      >
+        <motion.div
+          animate={shouldReduce ? {} : { y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ArrowDown size={18} style={{ color: 'rgba(255,255,255,0.3)' }} />
         </motion.div>
       </motion.div>
     </section>

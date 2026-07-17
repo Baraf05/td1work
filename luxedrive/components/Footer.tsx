@@ -10,7 +10,7 @@ const navLinks = [
 
 export default function Footer() {
   return (
-    <footer className="pt-20 pb-10 px-6 md:px-14" style={{ background: '#0A0A0B', borderTop: '0.5px solid rgba(201,169,110,0.08)' }}>
+    <footer className="pt-20 pb-10 px-6 md:px-14" style={{ background: '#000000', borderTop: '1px solid rgba(255,255,255,0.07)' }}>
       <div className="max-w-6xl mx-auto">
 
         {/* Top 3-column grid */}
@@ -19,19 +19,25 @@ export default function Footer() {
           {/* Left — Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2.5 mb-5 cursor-none" aria-label="Elite Class Dubai — home">
-              <svg viewBox="0 0 32 22" fill="none" className="w-7 h-5" aria-hidden="true">
-                <path d="M4 18 L16 4 L28 18" stroke="#C9A96E" strokeWidth="1" fill="none"/>
-                <path d="M8 18 L16 8 L24 18" fill="rgba(201,169,110,0.1)" stroke="none"/>
-                <line x1="1" y1="18" x2="31" y2="18" stroke="#C9A96E" strokeWidth="0.5" opacity="0.4"/>
-              </svg>
-              <span className="font-serif font-normal text-sm tracking-[0.2em] uppercase" style={{ color: '#F5F2EE' }}>
+              <span
+                className="flex items-center justify-center shrink-0 font-display font-bold"
+                style={{
+                  width: '32px', height: '32px',
+                  border: '1px solid rgba(201,169,110,0.4)',
+                  fontSize: '12px', letterSpacing: '0.02em', color: '#C9A96E',
+                }}
+                aria-hidden="true"
+              >
+                EC
+              </span>
+              <span className="font-display font-bold text-[11px] tracking-widest uppercase" style={{ color: '#FFFFFF' }}>
                 Elite Class
               </span>
             </Link>
-            <p className="font-sans leading-relaxed mb-5" style={{ fontSize: '13px', color: '#5A5855' }}>
+            <p className="font-sans leading-relaxed mb-5" style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}>
               Private chauffeur service. Licensed fleet. Available 24 hours.
             </p>
-            <address className="not-italic font-sans leading-relaxed" style={{ fontSize: '12px', color: '#5A5855' }}>
+            <address className="not-italic font-sans leading-relaxed" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.45)' }}>
               Bayswater Tower, Office 1003<br />
               Business Bay, Dubai — UAE
             </address>
@@ -39,7 +45,7 @@ export default function Footer() {
 
           {/* Centre — Navigation */}
           <div>
-            <p className="font-sans mb-5" style={{ fontSize: '10px', letterSpacing: '0.14em', color: '#3A3836' }}>
+            <p className="font-display mb-5 uppercase" style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.3)' }}>
               NAVIGATION
             </p>
             <nav aria-label="Footer navigation">
@@ -48,8 +54,8 @@ export default function Footer() {
                   <li key={label}>
                     <Link
                       href={href}
-                      className="font-sans transition-colors duration-200 cursor-none hover:text-[#A8A49E]"
-                      style={{ fontSize: '13px', color: '#5A5855' }}
+                      className="font-sans transition-colors duration-200 cursor-none hover:text-white"
+                      style={{ fontSize: '13px', fontWeight: 400, color: 'rgba(255,255,255,0.45)' }}
                     >
                       {label}
                     </Link>
@@ -69,7 +75,7 @@ export default function Footer() {
 
           {/* Right — Contact */}
           <div>
-            <p className="font-sans mb-5" style={{ fontSize: '10px', letterSpacing: '0.14em', color: '#3A3836' }}>
+            <p className="font-display mb-5 uppercase" style={{ fontSize: '10px', fontWeight: 700, letterSpacing: '0.2em', color: 'rgba(255,255,255,0.3)' }}>
               CONTACT
             </p>
             <ul className="space-y-4">
@@ -78,8 +84,8 @@ export default function Footer() {
                   href="https://wa.me/971542370940"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 font-sans transition-colors duration-200 cursor-none"
-                  style={{ fontSize: '13px', color: '#5A5855' }}
+                  className="flex items-center gap-2 font-sans transition-colors duration-200 cursor-none hover:text-white"
+                  style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}
                   aria-label="WhatsApp: +971 54 237 0940"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ color: '#C9A96E', flexShrink: 0 }} aria-hidden="true">
@@ -91,8 +97,8 @@ export default function Footer() {
               <li>
                 <a
                   href="mailto:info@eliteclasslimo.com"
-                  className="font-sans transition-colors duration-200 cursor-none"
-                  style={{ fontSize: '13px', color: '#5A5855' }}
+                  className="font-sans transition-colors duration-200 cursor-none hover:text-white"
+                  style={{ fontSize: '13px', color: 'rgba(255,255,255,0.45)' }}
                 >
                   info@eliteclasslimo.com
                 </a>
@@ -102,11 +108,11 @@ export default function Footer() {
         </div>
 
         {/* Divider */}
-        <div style={{ height: '0.5px', background: 'rgba(201,169,110,0.06)', marginBottom: '24px' }} />
+        <div style={{ height: '1px', background: 'rgba(255,255,255,0.06)', marginBottom: '24px' }} />
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-sans" style={{ fontSize: '12px', color: '#3A3836' }}>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-6">
+          <p className="font-sans" style={{ fontSize: '12px', color: 'rgba(255,255,255,0.25)' }}>
             &copy; {new Date().getFullYear()} Elite Class Dubai. All rights reserved.
           </p>
           <div className="flex items-center gap-1">

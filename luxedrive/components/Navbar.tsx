@@ -81,27 +81,34 @@ export default function Navbar() {
           aria-label="Main navigation"
           className={`flex items-center justify-between px-6 md:px-10 transition-all duration-300 ${
             scrolled
-              ? 'py-2 bg-[#0A0A0B] shadow-[0_1px_0_rgba(201,169,110,0.08)]'
-              : 'py-4 bg-transparent'
+              ? 'py-3 border-b border-[rgba(255,255,255,0.06)]'
+              : 'py-5 border-b border-transparent'
           }`}
-          style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.46,0.45,0.94)' }}
+          style={{
+            transitionTimingFunction: 'ease',
+            background: scrolled ? 'rgba(0,0,0,0.75)' : 'transparent',
+            backdropFilter: scrolled ? 'blur(20px)' : 'none',
+            WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
+          }}
         >
           {/* Logo */}
           <Link href="/" className="shrink-0 cursor-none" aria-label="Elite Class Dubai — home">
-            <motion.div
-              className="flex items-center gap-2.5 origin-left will-change-transform"
-              animate={{ scale: reduce ? 1 : scrolled ? 0.85 : 1 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            >
-              <svg viewBox="0 0 32 22" fill="none" width="28" height="18" aria-hidden="true">
-                <path d="M4 18 L16 4 L28 18" stroke="#C9A96E" strokeWidth="1" fill="none"/>
-                <path d="M8 18 L16 8 L24 18" fill="rgba(201,169,110,0.1)" stroke="none"/>
-                <line x1="1" y1="18" x2="31" y2="18" stroke="#C9A96E" strokeWidth="0.5" opacity="0.4"/>
-              </svg>
-              <span className="font-serif font-normal text-sm tracking-[0.2em] text-[#F5F2EE] uppercase whitespace-nowrap">
+            <div className="flex items-center gap-2.5">
+              <span
+                className="flex items-center justify-center shrink-0 font-display font-bold"
+                style={{
+                  width: '32px', height: '32px',
+                  border: '1px solid rgba(201,169,110,0.4)',
+                  fontSize: '12px', letterSpacing: '0.02em', color: '#C9A96E',
+                }}
+                aria-hidden="true"
+              >
+                EC
+              </span>
+              <span className="font-display font-bold text-[11px] tracking-widest text-white uppercase whitespace-nowrap">
                 Elite Class
               </span>
-            </motion.div>
+            </div>
           </Link>
 
           {/* Desktop links */}
@@ -114,17 +121,17 @@ export default function Navbar() {
                   href={l.href}
                   onClick={(e) => handleAnchor(e, l.id)}
                   aria-current={active ? 'true' : undefined}
-                  className={`relative text-[11px] font-sans tracking-[0.15em] uppercase transition-colors duration-200 cursor-none focus-visible:outline-[#C9A96E] pb-1 ${
+                  className={`relative font-display font-medium text-[11px] tracking-[0.12em] uppercase transition-colors duration-200 cursor-none focus-visible:outline-[#C9A96E] pb-1.5 ${
                     l.muted
-                      ? active ? 'text-[#A8A49E]' : 'text-[#5A5855] hover:text-[#A8A49E]'
-                      : active ? 'text-[#F5F2EE]' : 'text-[#A8A49E] hover:text-[#F5F2EE]'
+                      ? active ? 'text-white' : 'text-[rgba(255,255,255,0.3)] hover:text-white'
+                      : active ? 'text-white' : 'text-[rgba(255,255,255,0.45)] hover:text-white'
                   }`}
                 >
                   {l.label}
                   {active && (
                     <motion.span
-                      layoutId="nav-active-dot"
-                      className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 rounded-full will-change-transform"
+                      layoutId="nav-dot"
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 rounded-full will-change-transform"
                       style={{ width: '4px', height: '4px', background: '#C9A96E' }}
                       transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 30 }}
                     />
@@ -139,14 +146,20 @@ export default function Navbar() {
             <a
               href="#reservation"
               onClick={handleReserve}
-              className="hidden md:inline-flex items-center gap-1.5 px-5 h-9 font-sans font-medium text-[11px] tracking-[0.12em] uppercase transition-all duration-300 cursor-none focus-visible:outline-[#C9A96E]"
-              style={{ background: '#C9A96E', color: '#0A0A0B', borderRadius: 0 }}
+              className="hidden md:inline-flex items-center gap-1.5 font-display font-semibold uppercase cursor-none focus-visible:outline-[#C9A96E]"
+              style={{
+                background: '#C9A96E', color: '#000000', borderRadius: '999px',
+                padding: '10px 20px', fontSize: '12px', letterSpacing: '0.04em',
+                transition: 'background 0.2s, transform 0.2s',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = '#D4B87A'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = '#C9A96E'; e.currentTarget.style.transform = 'translateY(0)' }}
             >
               Reserve
             </a>
             <button
               onClick={() => setMenuOpen(v => !v)}
-              className="md:hidden p-2 text-[#A8A49E] hover:text-[#F5F2EE] transition-colors cursor-none"
+              className="md:hidden p-2 text-[rgba(255,255,255,0.6)] hover:text-white transition-colors cursor-none"
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
             >
@@ -164,7 +177,8 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-14 z-40 bg-[#0A0A0B] border-b border-[rgba(201,169,110,0.08)] px-6 py-6 md:hidden"
+            className="fixed inset-x-0 top-14 z-40 border-b border-[rgba(255,255,255,0.06)] px-6 py-6 md:hidden"
+            style={{ background: 'rgba(0,0,0,0.9)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
           >
             <div className="flex flex-col gap-5">
               {links.map((l) => (
@@ -172,19 +186,19 @@ export default function Navbar() {
                   key={l.label}
                   href={l.href}
                   onClick={(e) => handleAnchor(e, l.id)}
-                  className={`text-xs font-sans tracking-[0.15em] uppercase transition-colors ${
-                    l.muted ? 'text-[#5A5855] hover:text-[#A8A49E]' : 'text-[#A8A49E] hover:text-[#F5F2EE]'
+                  className={`font-display font-medium text-xs tracking-[0.12em] uppercase transition-colors ${
+                    l.muted ? 'text-[rgba(255,255,255,0.3)] hover:text-white' : 'text-[rgba(255,255,255,0.45)] hover:text-white'
                   }`}
                 >
                   {l.label}
                 </a>
               ))}
-              <div className="h-px bg-[rgba(201,169,110,0.08)] my-1" />
+              <div className="h-px bg-[rgba(255,255,255,0.06)] my-1" />
               <a
                 href="#reservation"
                 onClick={handleReserve}
-                className="inline-flex items-center justify-center h-11 font-sans font-medium text-xs tracking-[0.12em] uppercase"
-                style={{ background: '#C9A96E', color: '#0A0A0B' }}
+                className="inline-flex items-center justify-center h-11 font-display font-semibold text-xs tracking-[0.04em] uppercase"
+                style={{ background: '#C9A96E', color: '#000000', borderRadius: '999px' }}
               >
                 Reserve
               </a>

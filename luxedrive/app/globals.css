@@ -18,9 +18,20 @@
   --color-error:        #E85050;
   --color-success:      #4CAF70;
   --color-warning:      #E8A84C;
-  --font-serif:   'Playfair Display', Georgia, serif;
-  --font-sans:    'DM Sans', system-ui, sans-serif;
-  --font-display: 'Bebas Neue', sans-serif;
+  --font-serif:   'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --font-sans:    'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  /* ── Elite Class redesign tokens ── */
+  --gold:         #C9A96E;
+  --gold-dim:     rgba(201,169,110,0.15);
+  --bg:           #000000;
+  --surface:      #0D0D0F;
+  --surface-2:    #141416;
+  --border:       rgba(255,255,255,0.07);
+  --border-gold:  rgba(201,169,110,0.2);
+  --text-primary:   #FFFFFF;
+  --text-secondary: #A0A0A8;
+  --text-muted:     #4A4A52;
   --space-1:  4px; --space-2:  8px; --space-3:  12px; --space-4:  16px;
   --space-5:  24px; --space-6:  32px; --space-7:  48px; --space-8:  64px;
   --space-9:  96px; --space-10: 128px;
@@ -523,33 +534,36 @@ body[data-cursor="hover"] .cursor-ring {
 
 /* Section eyebrow label */
 .eyebrow {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--font-sans); font-size: 10px;
-  letter-spacing: 0.18em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 11px;
+  font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
   color: #C9A96E;
 }
 
-/* Hero button overrides */
+/* Primary: solid gold pill */
 .btn-gold {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 24px; font-family: var(--font-sans);
-  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; background: #C9A96E; color: #0A0A0B;
-  border: none; border-radius: 0; cursor: none;
-  transition: opacity 0.2s;
+  padding: 14px 28px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+  background: #C9A96E; color: #000000;
+  border: none; border-radius: 999px; cursor: none;
+  transition: background 0.2s, transform 0.2s;
 }
-.btn-gold:hover { opacity: 0.88; }
+.btn-gold:hover { background: #D4B87A; transform: translateY(-1px); }
 
+/* Secondary: outline pill */
 .btn-outline-hero {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 12px 24px; font-family: var(--font-sans);
-  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
-  text-transform: uppercase; background: transparent;
-  color: rgba(255,255,255,0.7);
-  border: 0.5px solid rgba(255,255,255,0.2); border-radius: 0;
-  cursor: none; transition: color 0.2s, border-color 0.2s;
+  padding: 14px 28px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+  background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.12); border-radius: 999px; cursor: none;
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, border-color 0.2s;
 }
-.btn-outline-hero:hover { color: #F5F2EE; border-color: rgba(255,255,255,0.4); }
+.btn-outline-hero:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.22); }
 
 /* Word reveal helper */
 .reveal-line { overflow: hidden; display: inline-block; }

@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         serif:   ['"Cormorant Garamond"', 'Georgia', 'serif'],
-        sans:    ['Inter', 'system-ui', 'sans-serif'],
-        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        sans:    ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
       },
       colors: {
         bg:        '#0A0A0B',

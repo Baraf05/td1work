@@ -3,6 +3,8 @@ import Marquee from '@/components/Marquee'
 import FleetSection from '@/components/FleetSection'
 import Services from '@/components/Services'
 import CoordinatedMovements from '@/components/CoordinatedMovements'
+import Partners from '@/components/Partners'
+import PartnerForm from '@/components/PartnerForm'
 import OurStandard from '@/components/OurStandard'
 import StatsBand from '@/components/StatsBand'
 import ReservationForm from '@/components/ReservationForm'
@@ -16,6 +18,8 @@ export default function HomePage() {
       <FleetSection />
       <Services />
       <CoordinatedMovements />
+      <Partners />
+      <PartnerForm />
       <OurStandard />
       <StatsBand />
       <ReservationForm />

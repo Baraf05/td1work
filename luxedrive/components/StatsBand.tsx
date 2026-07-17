@@ -120,6 +120,28 @@ export default function StatsBand() {
             </span>
           )}
         </motion.div>
+
+        {/* Fleet-scale secondary strip */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.28 }}
+          className="mt-12 pt-8 flex flex-col sm:flex-row items-center justify-center gap-x-10 gap-y-3 text-center"
+          style={{ borderTop: '0.5px solid rgba(201,169,110,0.06)' }}
+          aria-label="Fleet scale"
+        >
+          {[
+            SITE_CONFIG.fleetScale.count + ' vehicles',
+            SITE_CONFIG.fleetScale.sameDay,
+            SITE_CONFIG.fleetScale.coverage,
+          ].map((line, i) => (
+            <span key={i} className="flex items-center gap-3 font-sans" style={{ fontSize: '11px', letterSpacing: '0.1em', color: '#5A5855', textTransform: 'uppercase' }}>
+              {i > 0 && <span className="hidden sm:inline" style={{ width: '3px', height: '3px', borderRadius: '50%', background: 'rgba(201,169,110,0.3)', display: 'inline-block', flexShrink: 0 }} aria-hidden="true" />}
+              {line}
+            </span>
+          ))}
+        </motion.div>
       </div>
     </section>
   )

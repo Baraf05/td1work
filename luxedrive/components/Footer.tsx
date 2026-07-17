@@ -57,6 +57,14 @@ export default function Footer() {
                 ))}
               </ul>
             </nav>
+            {/* Secondary B2B entry — clearly muted vs. the dominant Reserve link above */}
+            <Link
+              href="#partners-access"
+              className="inline-block mt-5 font-sans transition-colors duration-200 cursor-none hover:text-[#A8A49E]"
+              style={{ fontSize: '12px', letterSpacing: '0.06em', color: '#3A3836' }}
+            >
+              Partner access &rarr;
+            </Link>
           </div>
 
           {/* Right — Contact */}

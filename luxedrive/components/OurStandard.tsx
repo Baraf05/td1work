@@ -40,46 +40,52 @@ export default function OurStandard() {
           </motion.h2>
         </div>
 
-        {/* ── DISCRETION PILLAR — more negative space ─────────── */}
+        {/* ── DISCRETION PILLAR — full-width, silence as a design choice ─────────── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-40px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="mb-16"
+          className="mb-20 md:mb-28 py-32"
           style={{
-            padding: 'clamp(48px, 8vw, 96px) clamp(32px, 6vw, 80px)',
-            border: '0.5px solid rgba(201,169,110,0.15)',
+            paddingLeft: 'clamp(24px, 5vw, 80px)',
+            paddingRight: 'clamp(24px, 5vw, 80px)',
+            borderTop: '0.5px solid rgba(201,169,110,0.12)',
+            borderBottom: '0.5px solid rgba(201,169,110,0.12)',
             background: '#0D0D0F',
           }}
           aria-labelledby="discretion-heading"
         >
-          <p className="font-sans mb-8" style={{ fontSize: '10px', letterSpacing: '0.2em', color: '#C9A96E', textTransform: 'uppercase' }}>
+          <p className="font-sans mb-12" style={{ fontSize: '10px', letterSpacing: '0.2em', color: '#C9A96E', textTransform: 'uppercase' }}>
             Discretion
           </p>
           <h3
             id="discretion-heading"
-            className="font-serif font-normal leading-snug mb-12"
-            style={{ fontSize: 'clamp(1.6rem, 4vw, 2.8rem)', color: '#F5F2EE', maxWidth: '560px' }}
+            className="font-serif font-normal leading-[1.1] mb-16 md:mb-20"
+            style={{ fontSize: 'clamp(2rem, 6vw, 4rem)', color: '#F5F2EE', maxWidth: '760px' }}
           >
             No badges. No logos.
             <br />No photographs.
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl">
+          <div className="max-w-2xl">
             {[
               'Non-disclosure agreements available on request.',
               'Client information is never shared, sold, or discussed.',
               'Drivers trained to be present — and invisible.',
-              'Unmarked vehicles available for all operations.',
+              'Vehicles chosen to be unremarkable. Service chosen to be exceptional.',
             ].map((line, i) => (
               <motion.p
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.1 + i * 0.07 }}
-                className="font-sans leading-relaxed"
-                style={{ fontSize: '14px', color: '#A8A49E', paddingLeft: '16px', borderLeft: '1px solid rgba(201,169,110,0.15)' }}
+                transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
+                className="font-sans leading-relaxed py-6"
+                style={{
+                  fontSize: 'clamp(15px, 2vw, 18px)',
+                  color: '#A8A49E',
+                  borderTop: i === 0 ? 'none' : '0.5px solid rgba(201,169,110,0.08)',
+                }}
               >
                 {line}
               </motion.p>

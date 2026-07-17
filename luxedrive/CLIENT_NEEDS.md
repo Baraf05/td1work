@@ -87,6 +87,17 @@ The client should read and sign off on:
 - All 20 vehicle descriptions — `lib/vehicles.ts`
 - FAQ answers (coverage area, payment methods, airport waiting policy) — `components/FAQ.tsx` and the mirrored FAQ JSON-LD in `app/layout.tsx` (keep both in sync)
 
+## 9. B2B / Partners
+
+| # | Item | Where it goes | Notes |
+|---|------|---------------|-------|
+| 9.1 | **Partner logo assets** (hotel, airport, corporate names) | `components/Partners.tsx` → logo strip placeholder slots | Confirm usage rights before showing any brand |
+| 9.2 | **Confirmed fleet size** | `lib/vehicles.ts` → `SITE_CONFIG.fleetScale.count` | Currently '20+' |
+| 9.3 | **Same-day expansion capability** | `lib/vehicles.ts` → `SITE_CONFIG.fleetScale.sameDay` | Confirm if this is a real operational guarantee |
+| 9.4 | **B2B enquiry routing** | `components/PartnerForm.tsx` → WhatsApp link or add a separate email/form endpoint | Should partner leads go to a different inbox than consumer bookings? |
+| 9.5 | **Incident record** | `lib/vehicles.ts` → `SITE_CONFIG.stats` — add `incidents: '0'` or real figure | Used in stats band |
+| 9.6 | **Years in operation** | `lib/vehicles.ts` → `SITE_CONFIG.establishedYear` (already exists, currently empty) | Needed for 'Est. XXXX' signal |
+
 ---
 
 ### Priority order for launch

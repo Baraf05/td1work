@@ -2,28 +2,70 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 
 const links = [
-  { label: 'Fleet',        href: '#fleet' },
-  { label: 'Services',     href: '#services' },
-  { label: 'Our Standard', href: '#our-standard' },
+  { label: 'Fleet',        href: '#fleet',            id: 'fleet',            muted: false },
+  { label: 'Services',     href: '#services',         id: 'services',         muted: false },
+  { label: 'Our Standard', href: '#our-standard',     id: 'our-standard',     muted: false },
+  { label: 'Partners',     href: '#partners-access',  id: 'partners-access',  muted: true  },
 ]
+
+// All section IDs we want to observe for the active indicator
+const OBSERVED_IDS = ['fleet', 'services', 'partners', 'partners-access', 'our-standard', 'reservation', 'faq']
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeId, setActiveId] = useState<string>('')
+  const reduce = useReducedMotion()
 
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 60)
+    const fn = () => setScrolled(window.scrollY > 80)
+    fn()
     window.addEventListener('scroll', fn, { passive: true })
     return () => window.removeEventListener('scroll', fn)
+  }, [])
+
+  // Active-section tracking via IntersectionObserver
+  useEffect(() => {
+    const els = OBSERVED_IDS
+      .map(id => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null)
+    if (els.length === 0) return
+
+    const visible = new Map<string, number>()
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.set(e.target.id, e.intersectionRatio)
+          else visible.delete(e.target.id)
+        }
+        let best = ''
+        let bestRatio = 0
+        for (const [id, ratio] of visible) {
+          if (ratio > bestRatio) { bestRatio = ratio; best = id }
+        }
+        // Map the Partners marketing section to the muted "Partners" nav link
+        if (best === 'partners') best = 'partners-access'
+        if (best) setActiveId(best)
+      },
+      { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    )
+    els.forEach(el => io.observe(el))
+    return () => io.disconnect()
   }, [])
 
   const handleReserve = (e: React.MouseEvent) => {
     e.preventDefault()
     document.getElementById('reservation')?.scrollIntoView({ behavior: 'smooth' })
+    setMenuOpen(false)
+  }
+
+  const handleAnchor = (e: React.MouseEvent, id: string) => {
+    e.preventDefault()
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     setMenuOpen(false)
   }
 
@@ -37,35 +79,59 @@ export default function Navbar() {
       >
         <nav
           aria-label="Main navigation"
-          className={`flex items-center justify-between px-6 md:px-10 h-16 transition-all duration-500 ${
+          className={`flex items-center justify-between px-6 md:px-10 transition-all duration-300 ${
             scrolled
-              ? 'bg-[#0A0A0B] shadow-[0_1px_0_rgba(201,169,110,0.08)]'
-              : 'bg-transparent'
+              ? 'py-2 bg-[#0A0A0B] shadow-[0_1px_0_rgba(201,169,110,0.08)]'
+              : 'py-4 bg-transparent'
           }`}
+          style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.46,0.45,0.94)' }}
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0 cursor-none group" aria-label="Elite Class Dubai — home">
-            <svg viewBox="0 0 32 22" fill="none" className="w-8 h-5" aria-hidden="true">
-              <path d="M4 18 L16 4 L28 18" stroke="#C9A96E" strokeWidth="1" fill="none"/>
-              <path d="M8 18 L16 8 L24 18" fill="rgba(201,169,110,0.1)" stroke="none"/>
-              <line x1="1" y1="18" x2="31" y2="18" stroke="#C9A96E" strokeWidth="0.5" opacity="0.4"/>
-            </svg>
-            <span className="font-serif font-normal text-sm tracking-[0.2em] text-[#F5F2EE] uppercase">
-              Elite Class
-            </span>
+            <motion.div
+              className="flex items-center gap-2.5 origin-left will-change-transform"
+              animate={{ scale: reduce ? 1 : scrolled ? 0.85 : 1 }}
+              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            >
+              <svg viewBox="0 0 32 22" fill="none" className="w-8 h-5" aria-hidden="true">
+                <path d="M4 18 L16 4 L28 18" stroke="#C9A96E" strokeWidth="1" fill="none"/>
+                <path d="M8 18 L16 8 L24 18" fill="rgba(201,169,110,0.1)" stroke="none"/>
+                <line x1="1" y1="18" x2="31" y2="18" stroke="#C9A96E" strokeWidth="0.5" opacity="0.4"/>
+              </svg>
+              <span className="font-serif font-normal text-sm tracking-[0.2em] text-[#F5F2EE] uppercase">
+                Elite Class
+              </span>
+            </motion.div>
           </Link>
 
           {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
-            {links.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                className="text-[11px] font-sans tracking-[0.15em] uppercase text-[#A8A49E] hover:text-[#F5F2EE] transition-colors duration-200 cursor-none focus-visible:outline-[#C9A96E]"
-              >
-                {l.label}
-              </Link>
-            ))}
+            {links.map((l) => {
+              const active = activeId === l.id
+              return (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  onClick={(e) => handleAnchor(e, l.id)}
+                  aria-current={active ? 'true' : undefined}
+                  className={`relative text-[11px] font-sans tracking-[0.15em] uppercase transition-colors duration-200 cursor-none focus-visible:outline-[#C9A96E] pb-1 ${
+                    l.muted
+                      ? active ? 'text-[#A8A49E]' : 'text-[#5A5855] hover:text-[#A8A49E]'
+                      : active ? 'text-[#F5F2EE]' : 'text-[#A8A49E] hover:text-[#F5F2EE]'
+                  }`}
+                >
+                  {l.label}
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active-dot"
+                      className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 rounded-full will-change-transform"
+                      style={{ width: '4px', height: '4px', background: '#C9A96E' }}
+                      transition={reduce ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </a>
+              )
+            })}
           </div>
 
           {/* Reserve CTA */}
@@ -98,18 +164,20 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 top-16 z-40 bg-[#0A0A0B] border-b border-[rgba(201,169,110,0.08)] px-6 py-6 md:hidden"
+            className="fixed inset-x-0 top-14 z-40 bg-[#0A0A0B] border-b border-[rgba(201,169,110,0.08)] px-6 py-6 md:hidden"
           >
             <div className="flex flex-col gap-5">
               {links.map((l) => (
-                <Link
+                <a
                   key={l.label}
                   href={l.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="text-xs font-sans tracking-[0.15em] uppercase text-[#A8A49E] hover:text-[#F5F2EE] transition-colors"
+                  onClick={(e) => handleAnchor(e, l.id)}
+                  className={`text-xs font-sans tracking-[0.15em] uppercase transition-colors ${
+                    l.muted ? 'text-[#5A5855] hover:text-[#A8A49E]' : 'text-[#A8A49E] hover:text-[#F5F2EE]'
+                  }`}
                 >
                   {l.label}
-                </Link>
+                </a>
               ))}
               <div className="h-px bg-[rgba(201,169,110,0.08)] my-1" />
               <a

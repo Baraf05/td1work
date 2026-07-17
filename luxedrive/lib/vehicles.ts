@@ -15,6 +15,11 @@ export const SITE_CONFIG = {
     { text: 'Government delegation, 5 days — coordinated across three emirates.' },
   ],
   badges: ['RTA-licensed', 'NDA available', 'Airside protocol experience'],
+  fleetScale: {
+    count: '20+',
+    sameDay: 'Same-day fleet expansion for large events',
+    coverage: 'Multi-property coverage across Dubai',
+  },
   licenceNumber: '', // CLIENT TO FILL
   establishedYear: '', // CLIENT TO FILL
 }

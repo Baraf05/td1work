@@ -4,30 +4,43 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, Minus } from 'lucide-react'
 
+// CLIENT TO CONFIRM — all answers below are draft copy. Review each before going live.
 const faqs = [
   {
     q: 'What areas do you cover?',
+    // CLIENT TO CONFIRM — coverage area, Oman availability, notice period
     a: 'We operate across Dubai and the wider UAE — Abu Dhabi, Sharjah, Ras Al Khaimah. Cross-border transfers to Oman are available with 24 hours\' notice.',
+    confirm: true,
   },
   {
     q: 'How do I pay? When do I pay?',
+    // CLIENT TO CONFIRM — accepted payment methods, timing, bank transfer details
     a: 'Payment is arranged directly — cash (AED, USD, EUR) or bank transfer before departure. No online payment is required.',
+    confirm: true,
   },
   {
     q: 'What is your cancellation policy?',
+    // CLIENT TO CONFIRM — cancellation window and refund percentage
     a: 'Cancellations made more than 4 hours before pickup are fully refunded. Within 4 hours, 50% of the agreed rate applies.',
+    confirm: true,
   },
   {
     q: 'Can you provide child seats?',
+    // CLIENT TO CONFIRM — child seat availability, age/weight spec, any charge
     a: 'Yes. Please specify the age and weight of the child in your request. Child seats are provided at no extra charge with advance notice.',
+    confirm: true,
   },
   {
     q: 'Do chauffeurs wait at the airport?',
+    // CLIENT TO CONFIRM — complimentary waiting time limit
     a: 'Yes. Your chauffeur tracks your flight in real time and waits up to 60 minutes after landing at no extra charge.',
+    confirm: true,
   },
   {
     q: 'Can I book for travel outside Dubai?',
+    // CLIENT TO CONFIRM — coverage, Oman cross-border, notice required
     a: 'Yes — Abu Dhabi, Sharjah, and cross-border to Oman with notice. Contact us for bespoke itineraries.',
+    confirm: true,
   },
 ]
 
@@ -121,11 +134,20 @@ export default function FAQ() {
                       className="overflow-hidden"
                     >
                       <p
-                        className="font-sans leading-relaxed pb-6 pr-10"
+                        className="font-sans leading-relaxed pr-10"
                         style={{ fontSize: '14px', color: '#A8A49E' }}
                       >
                         {faq.a}
                       </p>
+                      {faq.confirm && (
+                        <p
+                          className="font-sans pb-6 mt-2"
+                          style={{ fontSize: '10px', letterSpacing: '0.1em', color: 'rgba(201,169,110,0.3)', textTransform: 'uppercase' }}
+                          aria-hidden="true"
+                        >
+                          ⚑ Client to confirm
+                        </p>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>

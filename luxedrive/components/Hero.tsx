@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion'
 import { Pause, Play } from 'lucide-react'
 
 const WORD_VARIANTS = {
@@ -31,11 +31,12 @@ export default function Hero() {
   const ref = useRef<HTMLElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const [playing, setPlaying] = useState(true)
+  const shouldReduce = useReducedMotion()
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const imgY    = useTransform(scrollYProgress, [0, 1], ['0%', '18%'])
-  const textY   = useTransform(scrollYProgress, [0, 1], ['0%', '8%'])
-  const fadeOut = useTransform(scrollYProgress, [0, 0.6], [1, 0])
+  const imgY    = useTransform(scrollYProgress, [0, 1], shouldReduce ? ['0%', '0%'] : ['0%', '18%'])
+  const textY   = useTransform(scrollYProgress, [0, 1], shouldReduce ? ['0%', '0%'] : ['0%', '8%'])
+  const fadeOut = useTransform(scrollYProgress, [0, 0.6], shouldReduce ? [1, 1] : [1, 0])
 
   /* Respect prefers-reduced-motion */
   useEffect(() => {
@@ -74,7 +75,8 @@ export default function Hero() {
           className="absolute inset-0 w-full h-full object-cover"
           aria-hidden="true"
         >
-          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero.webm" type="video/webm" />
+          <source src="/hero.mp4"  type="video/mp4"  />
         </video>
         {/* Brightness treatment on poster fallback */}
         <div className="absolute inset-0" style={{ background: 'rgba(10,10,11,0.35)' }} />
@@ -139,12 +141,19 @@ export default function Hero() {
           className="font-serif font-normal text-[#F5F2EE] leading-[0.92] tracking-tight mb-10"
           style={{ fontSize: 'clamp(3.2rem, 9vw, 8rem)' }}
         >
-          <div className="flex flex-wrap gap-x-5">
-            <Word text="Above" />
-            <Word text="Every" className="italic text-[#C9A96E]" />
+          <div className="flex flex-wrap gap-x-4">
+            <Word text="The" />
+            <Word text="ground" />
+            <Word text="standard." />
           </div>
-          <div>
-            <Word text="Expectation." />
+          <div className="flex flex-wrap gap-x-4">
+            <Word text="For" />
+            <Word text="Dubai's" className="italic text-[#C9A96E]" />
+            <Word text="most" />
+          </div>
+          <div className="flex flex-wrap gap-x-4">
+            <Word text="demanding" />
+            <Word text="guests." />
           </div>
         </motion.h1>
 
@@ -156,7 +165,7 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-start sm:items-center gap-6 max-w-3xl"
         >
           <p className="text-sm font-sans text-[#A8A49E] leading-relaxed max-w-xs">
-            Private chauffeur service. Licensed fleet. Available 24 hours.
+            Trusted by touring artists, executives, and the guests who prefer not to be recognised.
           </p>
 
           <div className="flex items-center gap-3 flex-shrink-0">
@@ -171,7 +180,7 @@ export default function Hero() {
               href="https://wa.me/971542370940?text=Hello%20Elite%20Class%2C%20I%27d%20like%20to%20inquire%20about%20a%20booking."
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-outline"
+              className="btn-outline-hero"
               aria-label="Contact Elite Class on WhatsApp"
             >
               {/* WhatsApp icon */}

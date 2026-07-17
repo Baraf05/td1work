@@ -474,3 +474,98 @@ input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   [data-reveal], [data-reveal-stagger] > * { opacity: 1 !important; transform: none !important; }
 }
+
+/* ── Elite Class additions ─────────────────────────────────────── */
+
+/* Custom cursor — spring physics version */
+.cursor-dot {
+  position: fixed; top: 0; left: 0;
+  width: 8px; height: 8px;
+  background: #C9A96E; border-radius: 50%;
+  pointer-events: none; z-index: 9999;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+.cursor-ring {
+  position: fixed; top: 0; left: 0;
+  width: 28px; height: 28px;
+  border: 1px solid rgba(201,169,110,0.4); border-radius: 50%;
+  pointer-events: none; z-index: 9998;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  display: flex; align-items: center; justify-content: center;
+  transition: width 0.25s var(--ease-luxury), height 0.25s var(--ease-luxury),
+    border-color 0.25s, background 0.25s;
+}
+.cursor-label {
+  font-family: var(--font-sans); font-size: 9px; letter-spacing: 0.12em;
+  color: #C9A96E; text-transform: uppercase; opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none; user-select: none;
+}
+body[data-cursor="fleet"] .cursor-ring {
+  width: 60px; height: 60px;
+  border-color: rgba(201,169,110,0.6);
+  mix-blend-mode: difference;
+}
+body[data-cursor="fleet"] .cursor-label { opacity: 1; }
+body[data-cursor="cta"] .cursor-ring {
+  width: 48px; height: 48px; border-radius: 24px;
+  border-color: #C9A96E;
+}
+body[data-cursor="hover"] .cursor-ring {
+  width: 40px; height: 40px; border-color: rgba(201,169,110,0.5);
+}
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-ring { display: none; }
+  body { cursor: auto; }
+}
+
+/* Section eyebrow label */
+.eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-sans); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: #C9A96E;
+}
+
+/* Hero button overrides */
+.btn-gold {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; font-family: var(--font-sans);
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; background: #C9A96E; color: #0A0A0B;
+  border: none; border-radius: 0; cursor: none;
+  transition: opacity 0.2s;
+}
+.btn-gold:hover { opacity: 0.88; }
+
+.btn-outline-hero {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; font-family: var(--font-sans);
+  font-size: 12px; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; background: transparent;
+  color: rgba(255,255,255,0.7);
+  border: 0.5px solid rgba(255,255,255,0.2); border-radius: 0;
+  cursor: none; transition: color 0.2s, border-color 0.2s;
+}
+.btn-outline-hero:hover { color: #F5F2EE; border-color: rgba(255,255,255,0.4); }
+
+/* Word reveal helper */
+.reveal-line { overflow: hidden; display: inline-block; }
+
+/* Gold hairline sweep */
+@keyframes hairline-sweep {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Marquee — Elite Class dark version */
+.marquee-track {
+  animation: marquee-ec 60s linear infinite;
+  display: flex; white-space: nowrap;
+}
+@keyframes marquee-ec {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

@@ -116,6 +116,25 @@ export default function Footer() {
             </span>
           </div>
         </div>
+
+        {/* Credentials strip */}
+        {/* CLIENT TO CONFIRM: Replace placeholder text when RTA licence arrives */}
+        <div style={{ marginTop: '32px', paddingTop: '20px', borderTop: '0.5px solid rgba(201,169,110,0.04)' }}>
+          <div className="flex flex-wrap items-center justify-center gap-4">
+            {[
+              { label: 'RTA Licensed', note: '— Licence # pending —', pending: true },
+              { label: 'UAE Registered', note: '' },
+              { label: 'NDA Available', note: '' },
+            ].map(({ label, note, pending }) => (
+              <div key={label} className="flex items-center gap-2 font-sans"
+                style={{ fontSize: '11px', letterSpacing: '0.1em', color: pending ? '#3A3836' : '#5A5855', textTransform: 'uppercase' }}>
+                <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: pending ? '#3A3836' : 'rgba(201,169,110,0.3)', display: 'inline-block', flexShrink: 0 }} aria-hidden="true" />
+                {label}
+                {note && <span style={{ color: '#2A2826', textTransform: 'none', letterSpacing: '0' }}>{note}</span>}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </footer>
   )

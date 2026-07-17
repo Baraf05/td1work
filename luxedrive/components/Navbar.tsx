@@ -87,18 +87,18 @@ export default function Navbar() {
           style={{ transitionTimingFunction: 'cubic-bezier(0.25,0.46,0.45,0.94)' }}
         >
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 cursor-none group" aria-label="Elite Class Dubai — home">
+          <Link href="/" className="shrink-0 cursor-none" aria-label="Elite Class Dubai — home">
             <motion.div
               className="flex items-center gap-2.5 origin-left will-change-transform"
               animate={{ scale: reduce ? 1 : scrolled ? 0.85 : 1 }}
               transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
             >
-              <svg viewBox="0 0 32 22" fill="none" className="w-8 h-5" aria-hidden="true">
+              <svg viewBox="0 0 32 22" fill="none" width="28" height="18" aria-hidden="true">
                 <path d="M4 18 L16 4 L28 18" stroke="#C9A96E" strokeWidth="1" fill="none"/>
                 <path d="M8 18 L16 8 L24 18" fill="rgba(201,169,110,0.1)" stroke="none"/>
                 <line x1="1" y1="18" x2="31" y2="18" stroke="#C9A96E" strokeWidth="0.5" opacity="0.4"/>
               </svg>
-              <span className="font-serif font-normal text-sm tracking-[0.2em] text-[#F5F2EE] uppercase">
+              <span className="font-serif font-normal text-sm tracking-[0.2em] text-[#F5F2EE] uppercase whitespace-nowrap">
                 Elite Class
               </span>
             </motion.div>

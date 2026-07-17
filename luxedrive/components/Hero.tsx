@@ -13,13 +13,13 @@ const CONTAINER = {
   show: { transition: { staggerChildren: 0.1, delayChildren: 0.5 } },
 }
 
-function Word({ text, className = '' }: { text: string; className?: string }) {
+function Word({ text, style }: { text: string; style?: React.CSSProperties }) {
   return (
-    <span className={`reveal-line ${className}`}>
+    <span style={{ overflow: 'hidden', display: 'inline-block', verticalAlign: 'bottom' }}>
       <motion.span
         variants={WORD_VARIANTS}
         transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        className="inline-block will-change-transform"
+        style={{ display: 'block', willChange: 'transform', ...style }}
       >
         {text}
       </motion.span>
@@ -115,7 +115,7 @@ export default function Hero() {
       {/* ── Main content ───────────────────────────────── */}
       <motion.div
         style={{ y: textY, opacity: fadeOut }}
-        className="relative z-20 flex flex-col justify-end flex-1 px-6 md:px-14 pb-20 pt-40"
+        className="relative z-20 flex flex-col justify-end flex-1 px-6 md:px-14 pb-20 pt-28 md:pt-36"
       >
         {/* Eyebrow */}
         <motion.div
@@ -141,20 +141,13 @@ export default function Hero() {
           className="font-serif font-normal text-[#F5F2EE] leading-[0.92] tracking-tight mb-10"
           style={{ fontSize: 'clamp(3.2rem, 9vw, 8rem)' }}
         >
-          <div className="flex flex-wrap gap-x-4">
-            <Word text="The" />
-            <Word text="ground" />
-            <Word text="standard." />
-          </div>
-          <div className="flex flex-wrap gap-x-4">
-            <Word text="For" />
-            <Word text="Dubai's" className="italic text-[#C9A96E]" />
+          <div><Word text="The" />{' '}<Word text="ground" />{' '}<Word text="standard." /></div>
+          <div>
+            <Word text="For" />{' '}
+            <Word text="Dubai's" style={{ color: '#C9A96E', fontStyle: 'italic' }} />{' '}
             <Word text="most" />
           </div>
-          <div className="flex flex-wrap gap-x-4">
-            <Word text="demanding" />
-            <Word text="guests." />
-          </div>
+          <div><Word text="demanding" />{' '}<Word text="guests." /></div>
         </motion.h1>
 
         {/* Subtitle + CTAs */}

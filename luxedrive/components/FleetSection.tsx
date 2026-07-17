@@ -437,12 +437,8 @@ export default function FleetSection() {
         </div>
 
         {/* Grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px"
-            style={{ background: 'rgba(201,169,110,0.04)' }}
-          >
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <AnimatePresence mode="popLayout">
             {filtered.map((v, i) => (
               <VehicleCard
                 key={v.id}
@@ -452,8 +448,8 @@ export default function FleetSection() {
                 currency={currency}
               />
             ))}
-          </motion.div>
-        </AnimatePresence>
+          </AnimatePresence>
+        </div>
 
         {/* Reserve note */}
         <motion.p
